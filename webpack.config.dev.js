@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   mode: 'development',
@@ -25,13 +25,13 @@ module.exports = {
     maxAssetSize: 1024000,
   },
   devServer: {
-    publicPath: '/public/',
+    publicPath: '/',
     open: true,
     port: 9000,
     hot: true,
     watchContentBase: true,
-    historyApiFallback:{
-      index:'index.html'
+    historyApiFallback: {
+      index: 'index.html',
     },
   },
-}
+};

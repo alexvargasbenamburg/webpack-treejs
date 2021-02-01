@@ -4,7 +4,10 @@ import { WEBGL } from './webgl';
 if (WEBGL.isWebGLAvailable()) {
   var camera, scene, renderer;
 
+  const textureLoader = new THREE.TextureLoader();
+
   var cube;
+  var logo;
 
   init();
   render();
@@ -51,23 +54,31 @@ if (WEBGL.isWebGLAvailable()) {
     // spotlight, and spotLight helper
     var spotLight = new THREE.SpotLight();
     scene.add(spotLight);
-    spotLight.position.set(10,10,10);
+    spotLight.position.set(10, 10, 10);
   }
 
   function initObjects() {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshLambertMaterial({
+    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const cubeMaterial = new THREE.MeshLambertMaterial({
       color: 0x00afaf,
       side: THREE.DoubleSide,
     });
-    cube = new THREE.Mesh(geometry, material);
-    
+    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     scene.add(cube);
+
+    const logoGeometry = new THREE.PlaneGeometry(0.25, 0.25);
+    const logoMaterial = new THREE.MeshBasicMaterial({
+      map: textureLoader.load('static/imgs/LogoRojo.svg'),
+    });
+    logo = new THREE.Mesh(logoGeometry, logoMaterial);
+    scene.add(logo);
+    logo.position.set(-1.5,-1.5,0);
   }
 
   function update() {
     cube.rotateZ(0.01);
     cube.rotateY(0.01);
+    logo.rotateZ(0.01);
   }
 } else {
   var warning = WEBGL.getWebGLErrorMessage();
