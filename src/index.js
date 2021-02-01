@@ -5,6 +5,7 @@ if (WEBGL.isWebGLAvailable()) {
   var camera, scene, renderer;
 
   const textureLoader = new THREE.TextureLoader();
+  const fontLoader = new THREE.FontLoader();
 
   var cube;
   var logo;
@@ -72,7 +73,28 @@ if (WEBGL.isWebGLAvailable()) {
     });
     logo = new THREE.Mesh(logoGeometry, logoMaterial);
     scene.add(logo);
-    logo.position.set(-1.5,-1.5,0);
+    logo.position.set(-1.5, -1.5, 0);
+
+    fontLoader.load('/static/fonts/helvetiker_regular.typeface.json', function (font) {
+      const color = 0x006699;
+      const matDark = new THREE.LineBasicMaterial({
+        color: color,
+        side: THREE.DoubleSide,
+      });
+      const matLite = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.4,
+        side: THREE.DoubleSide,
+      });
+      const message = 'BASIC EXAMPLE';
+      const shapes = font.generateShapes(message, 1);
+      const geometry = new THREE.ShapeGeometry(shapes);
+      geometry.computeBoundingBox();
+      const text = new THREE.Mesh(geometry, matLite);
+      text.position.set(-5,6,-20);
+      scene.add(text);
+    }); //end load function
   }
 
   function update() {
