@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 
 // Loaders
-var textureLoader = new THREE.TextureLoader();
-var fontLoader = new THREE.FontLoader();
+const textureLoader = new THREE.TextureLoader();
+const fontLoader = new THREE.FontLoader();
+const audioLoader = new THREE.AudioLoader();
 // Main scene objs
 var camera;
+var listener;
 var scene;
 //Scene objs
 var text;
@@ -16,6 +18,8 @@ function TestScene(setScene) {
     1,
     10000
   );
+  listener = new THREE.AudioListener();
+  camera.add(listener);
   camera.position.set(0, 0, 5);
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
@@ -55,6 +59,13 @@ function TestScene(setScene) {
         scene.add(text);
       }
     );
+    const sound1 = new THREE.PositionalAudio(listener);
+    audioLoader.load('static/songs/airtone_-_citySkies_2.mp3', function (buffer) {
+      sound1.setBuffer(buffer);
+      sound1.setRefDistance(20);
+      sound1.play();
+    });
+    text.add(sound1);
   }
 
   function update() {}
