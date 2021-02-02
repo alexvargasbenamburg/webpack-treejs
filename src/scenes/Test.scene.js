@@ -21,30 +21,7 @@ function TestScene(setScene) {
   scene.background = new THREE.Color(0xffffff);
 
   window.addEventListener('resize', onWindowResize, false);
-
-  fontLoader.load(
-    '/static/fonts/helvetiker_regular.typeface.json',
-    function (font) {
-      const color = 0x006699;
-      const matDark = new THREE.LineBasicMaterial({
-        color: color,
-        side: THREE.DoubleSide,
-      });
-      const matLite = new THREE.MeshBasicMaterial({
-        color: color,
-        transparent: true,
-        opacity: 0.4,
-        side: THREE.DoubleSide,
-      });
-      const message = 'TEST SCENE';
-      const shapes = font.generateShapes(message, 1);
-      const geometry = new THREE.ShapeGeometry(shapes);
-      geometry.computeBoundingBox();
-      text = new THREE.Mesh(geometry, matLite);
-      text.position.set(-5, 0, -20);
-      scene.add(text);
-    }
-  ); //end load function
+  initObjects();
 
   function destroy() {
     window.document.removeEventListener('resize', onWindowResize);
@@ -52,6 +29,32 @@ function TestScene(setScene) {
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+  }
+
+  function initObjects() {
+    fontLoader.load(
+      '/static/fonts/helvetiker_regular.typeface.json',
+      function (font) {
+        const color = 0x006699;
+        const matDark = new THREE.LineBasicMaterial({
+          color: color,
+          side: THREE.DoubleSide,
+        });
+        const matLite = new THREE.MeshBasicMaterial({
+          color: color,
+          transparent: true,
+          opacity: 0.4,
+          side: THREE.DoubleSide,
+        });
+        const message = 'TEST SCENE';
+        const shapes = font.generateShapes(message, 1);
+        const geometry = new THREE.ShapeGeometry(shapes);
+        geometry.computeBoundingBox();
+        text = new THREE.Mesh(geometry, matLite);
+        text.position.set(-5, 0, -20);
+        scene.add(text);
+      }
+    );
   }
 
   function update() {}
