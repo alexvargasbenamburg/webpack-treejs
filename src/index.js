@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { WEBGL } from './webgl';
+import { Interaction } from 'three.interaction';
 
-import WelcomeScene from './scenes/welcome';
+import WelcomeScene from './scenes/Welcome.scene';
 
 if (WEBGL.isWebGLAvailable()) {
   var renderer;
@@ -9,6 +10,7 @@ if (WEBGL.isWebGLAvailable()) {
   var camera;
   var update;
   var destroy;
+  var interaction;
 
   init();
   render();
@@ -39,6 +41,7 @@ if (WEBGL.isWebGLAvailable()) {
     camera = sceneObj.camera;
     update = sceneObj.update;
     destroy = sceneObj.destroy;
+    interaction = new Interaction(renderer, scene, camera);
   }
 } else {
   var warning = WEBGL.getWebGLErrorMessage();
